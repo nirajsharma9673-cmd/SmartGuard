@@ -1,0 +1,30 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Model files
+models/*.pkl
+models/*.joblib
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables / secrets
+.env
+.env.*
+
+# Local data
+data/raw/
+data/private/
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

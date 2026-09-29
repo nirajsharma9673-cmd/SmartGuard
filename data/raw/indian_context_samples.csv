@@ -1,0 +1,16 @@
+text,label,source
+"Your electricity bill payment of Rs 1240 has been received successfully. Thank you for using the official electricity portal.",HAM,synthetic_indian
+"Your UPI payment of Rs 850 to ABC Store was successful. Transaction ID 847392.",HAM,synthetic_indian
+"Your bank account statement for August is now available in your official mobile banking application.",HAM,synthetic_indian
+"Your college examination fee payment has been received successfully. Keep this receipt for your records.",HAM,synthetic_indian
+"Your railway ticket from Pune to Mumbai has been booked successfully. Your booking reference is 839201.",HAM,synthetic_indian
+"Complete your KYC immediately by clicking this link or your bank account will be permanently blocked.",PHISHING,synthetic_indian
+"Your UPI account has won a cashback reward of Rs 5000. Enter your UPI PIN and OTP to claim the amount.",PHISHING,synthetic_indian
+"Your PAN card verification has failed. Login now and upload your banking details to avoid account suspension.",PHISHING,synthetic_indian
+"Your Aadhaar verification is pending. Click the link below and enter your OTP to complete verification.",PHISHING,synthetic_indian
+"URGENT: Your bank account will be closed today. Verify your debit card number, CVV and OTP immediately.",PHISHING,synthetic_indian
+"Congratulations! You have been selected for a Rs 1,00,000 prize. Pay the processing fee to receive your reward.",SPAM,synthetic_indian
+"Special loan offer! Get an instant personal loan with minimum documents. Apply now.",SPAM,synthetic_indian
+"Win an exciting smartphone by participating in our promotional contest. Limited entries available.",SPAM,synthetic_indian
+"Exclusive investment opportunity with guaranteed high returns. Contact us today to reserve your slot.",SPAM,synthetic_indian
+"Work from home and earn Rs 5000 per day. Registration is free for a limited time.",SPAM,synthetic_indian

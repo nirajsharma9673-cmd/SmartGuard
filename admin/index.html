@@ -1,0 +1,2811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartGuard Admin</title>
+
+    <style>
+
+        /* =========================================================
+           SMARTGUARD ADMIN — UI
+        ========================================================= */
+
+        :root {
+            --navy: #0b1220;
+            --navy-2: #111c2f;
+
+            --blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --blue-soft: #eff6ff;
+
+            --green: #16a34a;
+            --green-soft: #ecfdf5;
+
+            --orange: #d97706;
+            --orange-soft: #fff7ed;
+
+            --red: #dc2626;
+            --red-soft: #fef2f2;
+
+            --white: #ffffff;
+
+            --page: #f4f6fa;
+            --text: #0f172a;
+            --text-2: #334155;
+            --muted: #64748b;
+            --faint: #94a3b8;
+
+            --line: #e2e8f0;
+            --line-soft: #edf2f7;
+
+            --shadow:
+                0 8px 28px rgba(15, 23, 42, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--page);
+            color: var(--text);
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           APP
+        ========================================================= */
+
+        .app {
+            min-height: 100vh;
+
+            display: grid;
+
+            grid-template-columns: 220px 1fr;
+        }
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+
+        .sidebar {
+            position: sticky;
+            top: 0;
+
+            height: 100vh;
+
+            padding: 20px 14px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--navy) 0%,
+                    #101a2b 100%
+                );
+
+            color: white;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                0 8px 22px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+        .logo {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex: none;
+
+            border-radius: 11px;
+
+            background: var(--blue);
+
+            box-shadow:
+                0 7px 18px
+                rgba(37,99,235,0.25);
+        }
+
+        .logo svg {
+            width: 23px;
+            height: 23px;
+
+            fill: none;
+            stroke: white;
+
+            stroke-width: 1.8;
+
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .sidebar-brand h1 {
+            margin: 0;
+
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .sidebar-brand p {
+            margin: 3px 0 0;
+
+            color: #8e9db4;
+
+            font-size: 9px;
+        }
+
+        .nav {
+            padding-top: 22px;
+        }
+
+        .nav-label {
+            margin:
+                0 9px 8px;
+
+            color: #64748b;
+
+            font-size: 8px;
+            font-weight: 800;
+
+            letter-spacing: 0.12em;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            width: 100%;
+
+            padding:
+                10px 10px;
+
+            margin-bottom: 5px;
+
+            border-radius: 8px;
+
+            color: #9cabc0;
+
+            background: transparent;
+
+            font-size: 10px;
+            font-weight: 650;
+
+            text-align: left;
+
+            transition:
+                background 160ms ease,
+                color 160ms ease,
+                transform 160ms ease;
+        }
+
+        .nav-item svg {
+            width: 15px;
+            height: 15px;
+
+            fill: none;
+            stroke: currentColor;
+
+            stroke-width: 1.7;
+
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .nav-item.active {
+            background:
+                rgba(37,99,235,0.17);
+
+            color: white;
+        }
+
+        .nav-item:hover {
+            color: white;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            transform:
+                translateX(1px);
+        }
+
+        .sidebar-footer {
+            position: absolute;
+
+            left: 14px;
+            right: 14px;
+            bottom: 18px;
+
+            padding: 12px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.035);
+        }
+
+        .sidebar-footer-label {
+            color: #64748b;
+
+            font-size: 7px;
+            font-weight: 800;
+
+            letter-spacing: 0.08em;
+        }
+
+        .sidebar-footer-status {
+            display: flex;
+            align-items: center;
+
+            gap: 6px;
+
+            margin-top: 6px;
+
+            color: #d8e2ef;
+
+            font-size: 9px;
+            font-weight: 650;
+        }
+
+        .online-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #4ade80;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(74,222,128,0.08);
+        }
+
+        /* =========================================================
+           CONTENT
+        ========================================================= */
+
+        .content {
+            min-width: 0;
+
+            padding: 28px 30px 34px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            margin-bottom: 24px;
+        }
+
+        .page-kicker {
+            margin-bottom: 6px;
+
+            color: var(--blue);
+
+            font-size: 8px;
+            font-weight: 850;
+
+            letter-spacing: 0.12em;
+        }
+
+        .topbar h2 {
+            margin: 0;
+
+            font-size: 26px;
+            line-height: 1.1;
+
+            font-weight: 850;
+
+            letter-spacing: -0.7px;
+        }
+
+        .topbar p {
+            margin:
+                7px 0 0;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+        }
+
+        .api-state {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 8px 10px;
+
+            border:
+                1px solid #dcefe4;
+
+            border-radius: 20px;
+
+            background: #f2fbf5;
+
+            color: #15803d;
+
+            font-size: 9px;
+            font-weight: 750;
+        }
+
+        .refresh-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            border: 1px solid var(--line);
+
+            border-radius: 8px;
+
+            padding:
+                9px 12px;
+
+            background: white;
+
+            color: var(--text-2);
+
+            font-size: 10px;
+            font-weight: 750;
+
+            transition:
+                transform 160ms ease,
+                box-shadow 160ms ease,
+                background 160ms ease;
+        }
+
+        .refresh-btn:hover {
+            background: #f8fafc;
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 6px 15px
+                rgba(15,23,42,0.06);
+        }
+
+        .refresh-btn svg {
+            width: 13px;
+            height: 13px;
+
+            fill: none;
+            stroke: currentColor;
+
+            stroke-width: 1.7;
+
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* =========================================================
+           STATUS
+        ========================================================= */
+
+        .status {
+            min-height: 18px;
+
+            margin-bottom: 15px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+        .status.success {
+            color: var(--green);
+        }
+
+        .status.error {
+            color: var(--red);
+        }
+
+        /* =========================================================
+           STAT CARDS
+        ========================================================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(6, minmax(0, 1fr));
+
+            gap: 11px;
+
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            position: relative;
+
+            min-width: 0;
+
+            padding: 15px;
+
+            overflow: hidden;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 12px;
+
+            background: white;
+
+            box-shadow:
+                0 3px 10px
+                rgba(15,23,42,0.025);
+
+            transition:
+                transform 170ms ease,
+                box-shadow 170ms ease;
+        }
+
+        .stat-card::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 3px;
+
+            background: var(--blue);
+        }
+
+        .stat-card:nth-child(2)::before {
+            background: var(--red);
+        }
+
+        .stat-card:nth-child(3)::before {
+            background: var(--orange);
+        }
+
+        .stat-card:nth-child(4)::before {
+            background: var(--green);
+        }
+
+        .stat-card:nth-child(5)::before {
+            background: #6366f1;
+        }
+
+        .stat-card:nth-child(6)::before {
+            background: var(--blue);
+        }
+
+        .stat-card:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 22px
+                rgba(15,23,42,0.055);
+        }
+
+        .stat-label {
+            margin-bottom: 8px;
+
+            color: var(--muted);
+
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            line-height: 1;
+
+            font-weight: 850;
+
+            letter-spacing: -0.5px;
+        }
+
+        .stat-meta {
+            margin-top: 8px;
+
+            color: var(--faint);
+
+            font-size: 7.5px;
+        }
+
+        /* =========================================================
+           OVERVIEW GRID
+        ========================================================= */
+
+        .overview-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1.65fr;
+
+            gap: 14px;
+
+            margin-bottom: 16px;
+        }
+
+        .panel {
+            border:
+                1px solid var(--line);
+
+            border-radius: 13px;
+
+            background: white;
+
+            box-shadow:
+                0 3px 10px
+                rgba(15,23,42,0.025);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding:
+                15px 16px;
+
+            border-bottom:
+                1px solid var(--line-soft);
+        }
+
+        .panel-header h3 {
+            margin: 0;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .panel-header span {
+            color: var(--faint);
+
+            font-size: 8px;
+        }
+
+        .panel-body {
+            padding: 16px;
+        }
+
+        /* =========================================================
+           DISTRIBUTION
+        ========================================================= */
+
+        .distribution {
+            display: flex;
+            align-items: flex-end;
+
+            gap: 17px;
+
+            height: 150px;
+
+            padding:
+                8px 6px 0;
+        }
+
+        .bar-group {
+            flex: 1;
+
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: 6px;
+        }
+
+        .bar-value {
+            color: var(--text);
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .bar-track {
+            width: 38px;
+            height: 105px;
+
+            display: flex;
+            align-items: flex-end;
+
+            overflow: hidden;
+
+            border-radius:
+                8px 8px 5px 5px;
+
+            background:
+                #f1f5f9;
+        }
+
+        .bar-fill {
+            width: 100%;
+            height: 0;
+
+            border-radius:
+                8px 8px 5px 5px;
+
+            background: var(--blue);
+
+            transition:
+                height 850ms
+                cubic-bezier(
+                    0.22,
+                    1,
+                    0.36,
+                    1
+                );
+        }
+
+        .bar-fill.phishing {
+            background: var(--red);
+        }
+
+        .bar-fill.spam {
+            background: var(--orange);
+        }
+
+        .bar-fill.ham {
+            background: var(--green);
+        }
+
+        .bar-label {
+            color: var(--muted);
+
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        /* =========================================================
+           SECURITY SUMMARY
+        ========================================================= */
+
+        .risk-summary {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+        }
+
+        .risk-item {
+            padding: 13px;
+
+            border:
+                1px solid var(--line-soft);
+
+            border-radius: 9px;
+
+            background: #fbfcfe;
+        }
+
+        .risk-item-label {
+            color: var(--muted);
+
+            font-size: 8px;
+            font-weight: 650;
+        }
+
+        .risk-item-value {
+            margin-top: 7px;
+
+            font-size: 18px;
+            line-height: 1;
+
+            font-weight: 850;
+        }
+
+        .risk-note {
+            margin-top: 4px;
+
+            color: var(--faint);
+
+            font-size: 7px;
+        }
+
+        .mini-risk-meter {
+            width: 100%;
+            height: 5px;
+
+            margin-top: 10px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background: #edf1f6;
+        }
+
+        .mini-risk-fill {
+            width: 0%;
+            height: 100%;
+
+            border-radius: inherit;
+
+            background: var(--blue);
+
+            transition:
+                width 800ms ease-out;
+        }
+
+        /* =========================================================
+           REPORTS
+        ========================================================= */
+
+        .reports-panel {
+            overflow: hidden;
+        }
+
+        .reports-top {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            padding:
+                16px;
+
+            border-bottom:
+                1px solid var(--line-soft);
+        }
+
+        .reports-top h3 {
+            margin: 0;
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .reports-top span {
+            color: var(--muted);
+
+            font-size: 8px;
+        }
+
+        .table-wrap {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            min-width: 850px;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            padding:
+                11px 13px;
+
+            background: #fbfcfe;
+
+            color: var(--muted);
+
+            border-bottom:
+                1px solid var(--line);
+
+            font-size: 8px;
+            font-weight: 800;
+
+            text-align: left;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding:
+                12px 13px;
+
+            border-bottom:
+                1px solid var(--line-soft);
+
+            color: var(--text-2);
+
+            font-size: 9px;
+        }
+
+        tbody tr {
+            transition:
+                background 140ms ease;
+        }
+
+        tbody tr:hover {
+            background: #fbfdff;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding:
+                4px 7px;
+
+            border-radius: 5px;
+
+            font-size: 7px;
+            font-weight: 850;
+        }
+
+        .badge.phishing {
+            background: var(--red-soft);
+            color: #b91c1c;
+        }
+
+        .badge.spam {
+            background: var(--orange-soft);
+            color: #92400e;
+        }
+
+        .badge.ham {
+            background: var(--green-soft);
+            color: #166534;
+        }
+
+        .badge.pending {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .score-cell {
+            font-weight: 800;
+        }
+
+        .view-btn {
+            border:
+                1px solid #c9d8f8;
+
+            border-radius: 6px;
+
+            padding:
+                5px 9px;
+
+            background: var(--blue-soft);
+
+            color: var(--blue);
+
+            font-size: 8px;
+            font-weight: 800;
+
+            transition:
+                background 140ms ease,
+                transform 140ms ease;
+        }
+
+        .view-btn:hover {
+            background: #e0ebff;
+
+            transform:
+                translateY(-1px);
+        }
+
+        .empty {
+            padding: 35px !important;
+
+            color: var(--muted);
+
+            text-align: center;
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================= */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 22px;
+
+            background:
+                rgba(7, 13, 24, 0.54);
+
+            backdrop-filter:
+                blur(5px);
+
+            animation:
+                fadeIn 180ms ease-out;
+        }
+
+        .modal-content {
+            width:
+                min(900px, 100%);
+
+            max-height:
+                86vh;
+
+            overflow: hidden;
+
+            border-radius: 16px;
+
+            background: white;
+
+            box-shadow:
+                0 30px 80px
+                rgba(15,23,42,0.25);
+
+            animation:
+                modalIn 220ms ease-out;
+        }
+
+        .modal-header {
+            display: flex;
+
+            align-items: flex-start;
+            justify-content: space-between;
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid var(--line);
+        }
+
+        .modal-kicker {
+            margin-bottom: 4px;
+
+            color: var(--blue);
+
+            font-size: 7px;
+            font-weight: 850;
+
+            letter-spacing: 0.1em;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+
+            font-size: 18px;
+            font-weight: 850;
+        }
+
+        .modal-header p {
+            margin: 5px 0 0;
+
+            color: var(--muted);
+
+            font-size: 8px;
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+
+            border-radius: 50%;
+
+            background: #f1f5f9;
+
+            color: var(--text-2);
+
+            font-size: 20px;
+
+            transition:
+                background 140ms ease,
+                transform 140ms ease;
+        }
+
+        .close-btn:hover {
+            background: #e2e8f0;
+
+            transform:
+                rotate(4deg);
+        }
+
+        .modal-body {
+            padding: 20px;
+
+            overflow-y: auto;
+
+            max-height:
+                calc(86vh - 92px);
+        }
+
+        .modal-meta {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 9px;
+
+            margin-bottom: 14px;
+        }
+
+        .meta-box {
+            padding: 11px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 8px;
+
+            background: #f8fafc;
+        }
+
+        .meta-label {
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 7px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+        }
+
+        .meta-value {
+            display: block;
+
+            margin-top: 5px;
+
+            color: var(--text);
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .email-content-box {
+            overflow: hidden;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 10px;
+        }
+
+        .email-content-title {
+            padding:
+                10px 12px;
+
+            border-bottom:
+                1px solid var(--line);
+
+            background: #f8fafc;
+
+            color: var(--text-2);
+
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        #reportEmail {
+            margin: 0;
+
+            padding: 15px;
+
+            max-height: 380px;
+
+            overflow-y: auto;
+
+            white-space: pre-wrap;
+
+            word-break: break-word;
+
+            color: var(--text-2);
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            font-size: 10px;
+
+            line-height: 1.65;
+
+            background: white;
+        }
+
+        /* =========================================================
+           ANIMATIONS
+        ========================================================= */
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(12px)
+                    scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1150px) {
+
+            .app {
+                grid-template-columns:
+                    190px 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 900px) {
+
+            .app {
+                display: block;
+            }
+
+            .sidebar {
+                position: static;
+
+                height: auto;
+
+                padding: 12px 14px;
+            }
+
+            .sidebar-brand {
+                padding-bottom: 12px;
+            }
+
+            .nav,
+            .sidebar-footer {
+                display: none;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .overview-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .topbar {
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            .topbar-actions {
+                width: 100%;
+
+                justify-content:
+                    space-between;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .modal-meta {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        /* =========================================================
+           REDUCED MOTION
+        ========================================================= */
+
+        @media (
+            prefers-reduced-motion: reduce
+        ) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration:
+                    0.01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    0.01ms !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="logo">
+
+                <svg
+                    viewBox="0 0 32 32"
+                    aria-hidden="true"
+                >
+
+                    <path
+                        d="M16 3.5L26 7V14.2C26 20.3 22.3 25.4 16 28C9.7 25.4 6 20.3 6 14.2V7L16 3.5Z"
+                    />
+
+                    <path
+                        d="M11.3 15.8L14.4 18.8L20.8 12"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    SmartGuard
+                </h1>
+
+                <p>
+                    Security console
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="nav">
+
+            <div class="nav-label">
+                OVERVIEW
+            </div>
+
+
+            <button
+                class="nav-item active"
+                type="button"
+            >
+
+                <svg viewBox="0 0 24 24">
+                    <rect
+                        x="3"
+                        y="3"
+                        width="7"
+                        height="7"
+                        rx="1"
+                    />
+                    <rect
+                        x="14"
+                        y="3"
+                        width="7"
+                        height="7"
+                        rx="1"
+                    />
+                    <rect
+                        x="3"
+                        y="14"
+                        width="7"
+                        height="7"
+                        rx="1"
+                    />
+                    <rect
+                        x="14"
+                        y="14"
+                        width="7"
+                        height="7"
+                        rx="1"
+                    />
+                </svg>
+
+                Dashboard
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                type="button"
+            >
+
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M4 5H20V19H4Z"
+                    />
+                    <path
+                        d="M8 9H16M8 12H14M8 15H12"
+                    />
+                </svg>
+
+                Reports
+
+            </button>
+
+
+            <div
+                class="nav-label"
+                style="margin-top:20px;"
+            >
+                SYSTEM
+            </div>
+
+
+            <button
+                class="nav-item"
+                type="button"
+            >
+
+                <svg viewBox="0 0 24 24">
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                    />
+                    <path
+                        d="M19.4 15A1.7 1.7 0 0 0 19.7 17.1L20 17.4L17.4 20L17.1 19.7A1.7 1.7 0 0 0 15 19.4A1.7 1.7 0 0 0 14 21H10A1.7 1.7 0 0 0 9 19.4A1.7 1.7 0 0 0 6.9 19.7L6.6 20L4 17.4L4.3 17.1A1.7 1.7 0 0 0 4.6 15A1.7 1.7 0 0 0 3 14V10A1.7 1.7 0 0 0 4.6 9A1.7 1.7 0 0 0 4.3 6.9L4 6.6L6.6 4L6.9 4.3A1.7 1.7 0 0 0 9 4.6A1.7 1.7 0 0 0 10 3H14A1.7 1.7 0 0 0 15 4.6A1.7 1.7 0 0 0 17.1 4.3L17.4 4L20 6.6L19.7 6.9A1.7 1.7 0 0 0 19.4 9A1.7 1.7 0 0 0 21 10V14A1.7 1.7 0 0 0 19.4 15Z"
+                    />
+                </svg>
+
+                System status
+
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="sidebar-footer-label">
+                API STATUS
+            </div>
+
+            <div class="sidebar-footer-status">
+
+                <span class="online-dot"></span>
+
+                SmartGuard API online
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="content">
+
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="page-kicker">
+                    SECURITY OPERATIONS
+                </div>
+
+                <h2>
+                    Admin dashboard
+                </h2>
+
+                <p>
+                    Monitor reported email activity and model risk signals.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <div class="api-state">
+
+                    <span class="online-dot"></span>
+
+                    API connected
+
+                </div>
+
+
+                <button
+                    id="refreshBtn"
+                    class="refresh-btn"
+                    type="button"
+                >
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M20 11A8 8 0 0 0 6.3 5.3L4 7"
+                        />
+
+                        <path
+                            d="M4 3V7H8"
+                        />
+
+                        <path
+                            d="M4 13A8 8 0 0 0 17.7 18.7L20 17"
+                        />
+
+                        <path
+                            d="M20 21V17H16"
+                        />
+
+                    </svg>
+
+                    Refresh
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- STATUS -->
+
+        <div
+            id="status"
+            class="status"
+            aria-live="polite"
+        >
+            Loading dashboard...
+        </div>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    TOTAL REPORTS
+                </div>
+
+                <div
+                    id="totalReports"
+                    class="stat-value"
+                >
+                    0
+                </div>
+
+                <div class="stat-meta">
+                    All submitted reports
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    PHISHING
+                </div>
+
+                <div
+                    id="phishingReports"
+                    class="stat-value"
+                >
+                    0
+                </div>
+
+                <div class="stat-meta">
+                    Model classified
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    SPAM
+                </div>
+
+                <div
+                    id="spamReports"
+                    class="stat-value"
+                >
+                    0
+                </div>
+
+                <div class="stat-meta">
+                    Model classified
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    HAM
+                </div>
+
+                <div
+                    id="hamReports"
+                    class="stat-value"
+                >
+                    0
+                </div>
+
+                <div class="stat-meta">
+                    Normal email reports
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    PENDING
+                </div>
+
+                <div
+                    id="pendingReports"
+                    class="stat-value"
+                >
+                    0
+                </div>
+
+                <div class="stat-meta">
+                    Current report status
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    AVG RISK
+                </div>
+
+                <div
+                    id="averageRisk"
+                    class="stat-value"
+                >
+                    0
+                </div>
+
+                <div class="stat-meta">
+                    Score out of 100
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             OVERVIEW
+        ================================================== -->
+
+        <section class="overview-grid">
+
+
+            <!-- DISTRIBUTION -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Report distribution
+                    </h3>
+
+                    <span>
+                        Current data
+                    </span>
+
+                </div>
+
+
+                <div class="panel-body">
+
+                    <div class="distribution">
+
+
+                        <div class="bar-group">
+
+                            <div
+                                id="hamBarValue"
+                                class="bar-value"
+                            >
+                                0
+                            </div>
+
+                            <div class="bar-track">
+
+                                <div
+                                    id="hamBar"
+                                    class="bar-fill ham"
+                                ></div>
+
+                            </div>
+
+                            <div class="bar-label">
+                                HAM
+                            </div>
+
+                        </div>
+
+
+                        <div class="bar-group">
+
+                            <div
+                                id="spamBarValue"
+                                class="bar-value"
+                            >
+                                0
+                            </div>
+
+                            <div class="bar-track">
+
+                                <div
+                                    id="spamBar"
+                                    class="bar-fill spam"
+                                ></div>
+
+                            </div>
+
+                            <div class="bar-label">
+                                SPAM
+                            </div>
+
+                        </div>
+
+
+                        <div class="bar-group">
+
+                            <div
+                                id="phishingBarValue"
+                                class="bar-value"
+                            >
+                                0
+                            </div>
+
+                            <div class="bar-track">
+
+                                <div
+                                    id="phishingBar"
+                                    class="bar-fill phishing"
+                                ></div>
+
+                            </div>
+
+                            <div class="bar-label">
+                                PHISHING
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RISK -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Security overview
+                    </h3>
+
+                    <span>
+                        Risk monitoring
+                    </span>
+
+                </div>
+
+
+                <div class="panel-body">
+
+                    <div class="risk-summary">
+
+
+                        <div class="risk-item">
+
+                            <div class="risk-item-label">
+                                Average risk
+                            </div>
+
+                            <div
+                                id="overviewRisk"
+                                class="risk-item-value"
+                            >
+                                0
+                            </div>
+
+                            <div class="risk-note">
+                                Average score across reports
+                            </div>
+
+                            <div class="mini-risk-meter">
+
+                                <div
+                                    id="averageRiskFill"
+                                    class="mini-risk-fill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="risk-item">
+
+                            <div class="risk-item-label">
+                                Pending reports
+                            </div>
+
+                            <div
+                                id="overviewPending"
+                                class="risk-item-value"
+                            >
+                                0
+                            </div>
+
+                            <div class="risk-note">
+                                Reports awaiting review
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             REPORT TABLE
+        ================================================== -->
+
+        <section class="panel reports-panel">
+
+            <div class="reports-top">
+
+                <div>
+
+                    <h3>
+                        Recent reports
+                    </h3>
+
+                    <span>
+                        Latest submitted email reports
+                    </span>
+
+                </div>
+
+                <span>
+                    Max. 10 shown
+                </span>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Prediction
+                            </th>
+
+                            <th>
+                                Risk
+                            </th>
+
+                            <th>
+                                Score
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Report ID
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="reportsTable"
+                    ></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     REPORT MODAL
+========================================================= -->
+
+<div
+    id="reportModal"
+    class="modal"
+    hidden
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+    >
+
+        <div class="modal-header">
+
+            <div>
+
+                <div class="modal-kicker">
+                    REPORT DETAILS
+                </div>
+
+                <h2 id="modalTitle">
+                    Reported email
+                </h2>
+
+                <p
+                    id="reportDate"
+                >
+                    —
+                </p>
+
+            </div>
+
+
+            <button
+                id="closeBtn"
+                class="close-btn"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <div class="modal-meta">
+
+
+                <div class="meta-box">
+
+                    <span class="meta-label">
+                        Prediction
+                    </span>
+
+                    <span
+                        id="reportPrediction"
+                        class="meta-value"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <span class="meta-label">
+                        Risk
+                    </span>
+
+                    <span
+                        id="reportRisk"
+                        class="meta-value"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <span class="meta-label">
+                        Score
+                    </span>
+
+                    <span
+                        id="reportScore"
+                        class="meta-value"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <span class="meta-label">
+                        Status
+                    </span>
+
+                    <span
+                        id="reportStatus"
+                        class="meta-value"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="email-content-box">
+
+                <div class="email-content-title">
+                    Reported email content
+                </div>
+
+                <pre
+                    id="reportEmail"
+                ></pre>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // =====================================================
+    // CONFIGURATION
+    // =====================================================
+
+    const API_URL =
+        "http://127.0.0.1:5000";
+
+
+    // =====================================================
+    // DOM
+    // =====================================================
+
+    const statusElement =
+        document.getElementById(
+            "status"
+        );
+
+    const refreshBtn =
+        document.getElementById(
+            "refreshBtn"
+        );
+
+    const reportsTable =
+        document.getElementById(
+            "reportsTable"
+        );
+
+    const reportModal =
+        document.getElementById(
+            "reportModal"
+        );
+
+    const closeBtn =
+        document.getElementById(
+            "closeBtn"
+        );
+
+
+    // =====================================================
+    // STATUS
+    // =====================================================
+
+    function setStatus(
+        message,
+        type = ""
+    ) {
+
+        statusElement.textContent =
+            message;
+
+        statusElement.className =
+            `status ${type}`;
+
+    }
+
+
+    // =====================================================
+    // DATE
+    // =====================================================
+
+    function formatDate(
+        value
+    ) {
+
+        if (!value) {
+            return "-";
+        }
+
+        const date =
+            new Date(value);
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+            return "-";
+        }
+
+        return date.toLocaleString();
+
+    }
+
+
+    // =====================================================
+    // BADGE
+    // =====================================================
+
+    function predictionBadge(
+        prediction
+    ) {
+
+        const value =
+            String(
+                prediction || "UNKNOWN"
+            ).toUpperCase();
+
+        return `
+            <span
+                class="badge ${value.toLowerCase()}"
+            >
+                ${value}
+            </span>
+        `;
+
+    }
+
+
+    function statusBadge(
+        status
+    ) {
+
+        const value =
+            String(
+                status || "UNKNOWN"
+            ).toUpperCase();
+
+        return `
+            <span
+                class="badge pending"
+            >
+                ${value}
+            </span>
+        `;
+
+    }
+
+
+    // =====================================================
+    // BAR UPDATE
+    // =====================================================
+
+    function updateBars(
+        ham,
+        spam,
+        phishing,
+        total
+    ) {
+
+        const safeTotal =
+            total > 0
+                ? total
+                : 1;
+
+
+        const hamHeight =
+            (ham / safeTotal) * 100;
+
+        const spamHeight =
+            (spam / safeTotal) * 100;
+
+        const phishingHeight =
+            (phishing / safeTotal) * 100;
+
+
+        document.getElementById(
+            "hamBarValue"
+        ).textContent =
+            ham;
+
+
+        document.getElementById(
+            "spamBarValue"
+        ).textContent =
+            spam;
+
+
+        document.getElementById(
+            "phishingBarValue"
+        ).textContent =
+            phishing;
+
+
+        requestAnimationFrame(() => {
+
+            document.getElementById(
+                "hamBar"
+            ).style.height =
+                `${hamHeight}%`;
+
+
+            document.getElementById(
+                "spamBar"
+            ).style.height =
+                `${spamHeight}%`;
+
+
+            document.getElementById(
+                "phishingBar"
+            ).style.height =
+                `${phishingHeight}%`;
+
+        });
+
+    }
+
+
+    // =====================================================
+    // LOAD DASHBOARD
+    // =====================================================
+
+    async function loadDashboard() {
+
+        setStatus(
+            "Updating dashboard..."
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_URL}/admin/stats`
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "Dashboard request failed."
+                );
+
+            }
+
+
+            const stats =
+                data.stats || {};
+
+
+            const total =
+                Number(
+                    stats.total_reports || 0
+                );
+
+            const phishing =
+                Number(
+                    stats.phishing_reports || 0
+                );
+
+            const spam =
+                Number(
+                    stats.spam_reports || 0
+                );
+
+            const ham =
+                Number(
+                    stats.ham_reports || 0
+                );
+
+            const pending =
+                Number(
+                    stats.pending_reports || 0
+                );
+
+            const averageRisk =
+                Number(
+                    stats.average_risk_score || 0
+                );
+
+
+            // -------------------------------------------------
+            // MAIN CARDS
+            // -------------------------------------------------
+
+            document.getElementById(
+                "totalReports"
+            ).textContent =
+                total;
+
+
+            document.getElementById(
+                "phishingReports"
+            ).textContent =
+                phishing;
+
+
+            document.getElementById(
+                "spamReports"
+            ).textContent =
+                spam;
+
+
+            document.getElementById(
+                "hamReports"
+            ).textContent =
+                ham;
+
+
+            document.getElementById(
+                "pendingReports"
+            ).textContent =
+                pending;
+
+
+            document.getElementById(
+                "averageRisk"
+            ).textContent =
+                averageRisk;
+
+
+            // -------------------------------------------------
+            // OVERVIEW
+            // -------------------------------------------------
+
+            document.getElementById(
+                "overviewRisk"
+            ).textContent =
+                averageRisk;
+
+
+            document.getElementById(
+                "overviewPending"
+            ).textContent =
+                pending;
+
+
+            document.getElementById(
+                "averageRiskFill"
+            ).style.width =
+                `${Math.min(
+                    averageRisk,
+                    100
+                )}%`;
+
+
+            // -------------------------------------------------
+            // DISTRIBUTION
+            // -------------------------------------------------
+
+            updateBars(
+                ham,
+                spam,
+                phishing,
+                total
+            );
+
+
+            // -------------------------------------------------
+            // REPORT TABLE
+            // -------------------------------------------------
+
+            const reports =
+                Array.isArray(
+                    data.recent_reports
+                )
+                    ? data.recent_reports
+                    : [];
+
+
+            reportsTable.innerHTML =
+                "";
+
+
+            if (
+                reports.length === 0
+            ) {
+
+                reportsTable.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty"
+                        >
+                            No reports yet.
+                        </td>
+
+                    </tr>
+
+                `;
+
+            } else {
+
+
+                reports.forEach(
+                    report => {
+
+                        const row =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        const reportId =
+                            String(
+                                report.id || ""
+                            );
+
+
+                        const shortId =
+                            reportId
+                                ? `${reportId.substring(
+                                    0,
+                                    8
+                                  )}...`
+                                : "-";
+
+
+                        row.innerHTML = `
+
+                            <td>
+                                ${predictionBadge(
+                                    report.prediction
+                                )}
+                            </td>
+
+                            <td>
+                                ${report.risk_level || "-"}
+                            </td>
+
+                            <td
+                                class="score-cell"
+                            >
+                                ${report.risk_score ?? 0}/100
+                            </td>
+
+                            <td>
+                                ${statusBadge(
+                                    report.status
+                                )}
+                            </td>
+
+                            <td>
+                                ${formatDate(
+                                    report.created_at
+                                )}
+                            </td>
+
+                            <td>
+                                ${shortId}
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="view-btn"
+                                    type="button"
+                                >
+                                    View
+                                </button>
+
+                            </td>
+
+                        `;
+
+
+                        const viewButton =
+                            row.querySelector(
+                                ".view-btn"
+                            );
+
+
+                        viewButton.addEventListener(
+                            "click",
+                            () => {
+
+                                viewReport(
+                                    reportId
+                                );
+
+                            }
+                        );
+
+
+                        reportsTable.appendChild(
+                            row
+                        );
+
+                    }
+                );
+
+            }
+
+
+            setStatus(
+                "Dashboard updated successfully.",
+                "success"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+
+            setStatus(
+                "Could not connect to SmartGuard API.",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // VIEW REPORT
+    // =====================================================
+
+    async function viewReport(
+        reportId
+    ) {
+
+        if (!reportId) {
+
+            setStatus(
+                "Invalid report ID.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_URL}/reports/${encodeURIComponent(
+                        reportId
+                    )}`
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "Could not load report."
+                );
+
+            }
+
+
+            const report =
+                data.report;
+
+
+            document.getElementById(
+                "reportPrediction"
+            ).textContent =
+                report.prediction || "-";
+
+
+            document.getElementById(
+                "reportRisk"
+            ).textContent =
+                report.risk_level || "-";
+
+
+            document.getElementById(
+                "reportScore"
+            ).textContent =
+                `${report.risk_score ?? 0}/100`;
+
+
+            document.getElementById(
+                "reportStatus"
+            ).textContent =
+                report.status || "-";
+
+
+            document.getElementById(
+                "reportDate"
+            ).textContent =
+                formatDate(
+                    report.created_at
+                );
+
+
+            document.getElementById(
+                "reportEmail"
+            ).textContent =
+                report.email_text ||
+                "No email content available.";
+
+
+            reportModal.hidden =
+                false;
+
+            reportModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+
+            setStatus(
+                "Could not load the reported email.",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // CLOSE MODAL
+    // =====================================================
+
+    function closeReport() {
+
+        reportModal.hidden =
+            true;
+
+        reportModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    closeBtn.addEventListener(
+        "click",
+        closeReport
+    );
+
+
+    reportModal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                reportModal
+            ) {
+
+                closeReport();
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                !reportModal.hidden
+            ) {
+
+                closeReport();
+
+            }
+
+        }
+    );
+
+
+    // =====================================================
+    // REFRESH
+    // =====================================================
+
+    refreshBtn.addEventListener(
+        "click",
+        loadDashboard
+    );
+
+
+    // =====================================================
+    // INITIAL LOAD
+    // =====================================================
+
+    loadDashboard();
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "SmartGuard",
+  "version": "1.0.0",
+  "description": "Explainable AI-powered spam and phishing email detection.",
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:5000/*",
+    "https://mail.google.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
